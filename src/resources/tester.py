@@ -32,7 +32,7 @@ def get_input_and_output(parent_path: Path) -> Iterable[tuple[list[str], list[st
 def run_main(main_function: Callable[[], None], pair_of_input_output: tuple[list[str], list[str]]) -> None:
     input, output = pair_of_input_output
 
-    with patch('builtins.input', side_effect=input), patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+    with patch('builtins.input', side_effect=input), patch('sys.stdin', StringIO(" ".join(input))), patch('sys.stdout', new_callable=StringIO) as mock_stdout:
         main_function()
         result = mock_stdout.getvalue().split()
 
